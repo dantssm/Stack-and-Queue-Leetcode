@@ -34,12 +34,25 @@ class MyStack:
         :type x: int
         :rtype: None
         """
+        def pop_last_element(queue: Queue):
+            if queue.head == queue.tail:
+                item = queue.head.item
+                queue.head = None
+                queue.tail = None
+                return item
+            current = queue.head
+            while current.next != queue.tail:
+                current = current.next
+            item = queue.tail.item
+            current.next = None
+            queue.tail = current
+            return item
         reversed_queue = Queue()
         while not self.sth.is_empty():
-            reversed_queue.to_add(self.sth.to_pop())
+            reversed_queue.to_add(pop_last_element(self.sth))
         reversed_queue.to_add(x)
         while not reversed_queue.is_empty():
-            self.sth.to_add(reversed_queue.to_pop())
+            self.sth.to_add(pop_last_element(reversed_queue))
     def pop(self):
         """
         :rtype: int
@@ -51,7 +64,7 @@ class MyStack:
         :rtype: int
         """
         item = self.sth.to_peek
-        return item
+        return item.item
     def empty(self):
         """
         :rtype: bool
