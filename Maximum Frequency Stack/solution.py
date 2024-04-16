@@ -18,7 +18,6 @@ class Stack:
         if self.head:
             return self.head.item
         raise ValueError('Stack is empty')
-
 class FreqStack:
     def __init__(self):
         self.head = None
@@ -40,7 +39,7 @@ class FreqStack:
                     current.item.next += 1
                     return
                 if current.next is None:
-                    current.next = Node(Node(val, 1), current)
+                    current.next = Node(Node(val, 1), None)
                     return
                 current = current.next
             stack.head = Node(Node(val, 1), None)
@@ -55,11 +54,23 @@ class FreqStack:
             if new_current.item.next > max_count:
                 max_count = new_current.item.next
                 max_value = new_current.item.item
-        current_behind = self.head
-        current_ahead = current_behind
-        while current_behind is not None:
+            new_current = new_current.next
+        current_behind = None
+        current_ahead = self.head
+        while current_ahead is not None:
             if current_ahead.item == max_value:
-                current_behind.next = current_ahead.next
-            current_behind = current_behind.next
+                if current_behind is None:
+                    self.head = current_ahead.next
+                    current_behind = current_ahead.next
+                    if current_behind is None:
+                        current_ahead = None
+                    else:
+                        current_ahead = current_behind.next
+                else:
+                    current_behind.next = current_ahead.next
+                    current_ahead = current_behind.next
+                break
+            else:
+                current_behind = current_ahead
+                current_ahead = current_behind.next
         return max_value
-      
