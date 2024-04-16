@@ -18,34 +18,35 @@ class Stack:
         if self.head:
             return self.head.item
         raise ValueError('Stack is empty')
-class MyQueue(Stack):
+class MyQueue:
     def __init__(self):
-        super().__init__()
+        self.sth = Stack()
     def push(self, x):
         """
         :type x: int
         :rtype: None
         """
         reversed_stack = Stack()
-        while not self.is_empty():
-            reversed_stack.to_push(self.to_pop())
+        while not self.sth.is_empty():
+            reversed_stack.to_push(self.sth.to_pop())
         reversed_stack.to_push(x)
         while not reversed_stack.is_empty():
-            self.to_push(reversed_stack.to_pop())
+            self.sth.to_push(reversed_stack.to_pop())
     def pop(self):
         """
         :rtype: int
         """
-        item = self.to_pop()
+        item = self.sth.to_pop()
         return item
     def peek(self):
         """
         :rtype: int
         """
-        item = self.to_peek
+        item = self.sth.to_peek
         return item
     def empty(self):
         """
         :rtype: bool
         """
-        return self.is_empty()
+        return self.sth.is_empty()
+        
